@@ -1,0 +1,7 @@
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  text-decoration: none;
+  text-decoration-style: none;
+}
