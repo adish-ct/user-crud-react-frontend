@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { BACKEND_BASE_URL } from '../Api/Api';
 import '../Forms/SignupForm.css';
+import { useNavigate } from 'react-router-dom';
 
 function SignupForm() {
     const [firstName, setFirstName] = useState('');
@@ -11,6 +12,7 @@ function SignupForm() {
     const [password, setPassword] = useState('');
     const [errorMessages, setErrorMessages] = useState(null);
 
+    const navigate = useNavigate()
 
     const getFirstName = (e) => setFirstName(e.target.value);
     const getLastName = (e) => setLastName(e.target.value);
@@ -20,6 +22,7 @@ function SignupForm() {
     const signupFormSubmit = async (e) => {
         e.preventDefault();
 
+        // store data in object format
         const userData = {
             first_name: firstName,
             last_name: lastName,
@@ -32,9 +35,10 @@ function SignupForm() {
         };
 
         try {
+            // make a HTTP post request to specific API and pass data throught POST request.
             const response = await axios.post(`${BACKEND_BASE_URL}/api/users/register/`, userData, { headers });
-            console.log(response.data);
-            // Handle success, maybe redirect or show a success message
+            console.log("signed in user:", response.data.email);
+            navigate('/login')
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 // Validation error occurred
